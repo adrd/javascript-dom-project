@@ -54,7 +54,22 @@ body {
   height: 100%;
 }
 #app {
-  padding: 40px 0;
+  padding-top: 40px;
+  text-align: center;
+}
+#app h1 {
+  margin: 0;
+}
+#app h1:before {
+  content: '';
+  background: url('../img/javascript.svg') no-repeat center center;
+  background-size: contain;
+  width: 34px;
+  height: 34px;
+  display: inline-block;
+  margin-right: 14px;
+  position: relative;
+  top: 6px;
 }
 /* Todo Styling */
 .todos {
