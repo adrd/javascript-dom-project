@@ -1,21 +1,33 @@
 import "../assets/css/style.css";
 
 const app = document.getElementById('app');
-// app.innerText = '<span>Some Text Here</span>'; 
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-`;                                  // innertHTML receives a HTML template and creates the nodes of DOM in memory
-                                    // innerHTML overwrites innerText, if innerText was after innerHTML, innertText overwrites innerHTML 
 
-const h1 = document.createElement('h1');
-h1.innerText = 'Ultimate Courses';
-h1.innerText += 'Learning JS DOM';
-// h1.style.display = 'none';
-app.append(h1);
+// Using document.createElement()
+function createInputDOM({ label, type = 'text'}) {
+  const labelEl = document.createElement('label');
+  const inputEl = document.createElement('input');
 
-console.log(app.innerHTML);        // displays HTML template as string
-console.log(app.innerText);        // displays text only without whitespaces, displays visible text
-                                   // used only on Elements
-console.log(app.innerText.length);
-console.log(app.textContent);      // displays text with whitespaces, displays full text being visible or not
-                                   // applies to all Nodes
+  inputEl.type = type;
+  labelEl.innerText = label;
+  labelEl.append(inputEl);
+
+  return labelEl;
+}
+
+const inputFromDOM = createInputDOM({ label: 'Name'});
+console.log(inputFromDOM);                         // displays HTML template of the Node from DOM, <label>Name<input type="text"></label>
+console.log(inputFromDOM.querySelector('input'));  // displays HTML template of the Node from DOM, <input type="text">
+app.append(inputFromDOM);
+
+// Using string templates
+function createInputTemplate({ label, type = 'text'}) {
+  return `
+    <label>
+      ${label}
+      <input type="${type}"/>
+    </label>
+  `;
+}
+
+const inputFromTemplate = createInputTemplate({ label: 'Email', type: 'email'}); 
+app.innerHTML += inputFromTemplate;
