@@ -2,32 +2,29 @@ import "../assets/css/style.css";
 
 const app = document.getElementById('app');
 
-// Using document.createElement()
-function createInputDOM({ label, type = 'text'}) {
-  const labelEl = document.createElement('label');
-  const inputEl = document.createElement('input');
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+`;
 
-  inputEl.type = type;
-  labelEl.innerText = label;
-  labelEl.append(inputEl);
+const data = ['Earth', 'Fire', 'Water', 'Air'];
 
-  return labelEl;
-}
+// data.forEach(name => {
+//   const li = document.createElement('li');
+//   li.innerText = name;
+//   app.append(li);     // inefficient
+// });
 
-const inputFromDOM = createInputDOM({ label: 'Name'});
-console.log(inputFromDOM);                         // displays HTML template of the Node from DOM, <label>Name<input type="text"></label>
-console.log(inputFromDOM.querySelector('input'));  // displays HTML template of the Node from DOM, <input type="text">
-app.append(inputFromDOM);
+// const fragment = new DocumentFragment();
+const fragment = document.createDocumentFragment();
 
-// Using string templates
-function createInputTemplate({ label, type = 'text'}) {
-  return `
-    <label>
-      ${label}
-      <input type="${type}"/>
-    </label>
-  `;
-}
+// console.dir(fragment);  // #document-fragment
 
-const inputFromTemplate = createInputTemplate({ label: 'Email', type: 'email'}); 
-app.innerHTML += inputFromTemplate;
+data.forEach(name => {
+  const li = document.createElement('li');
+  li.innerText = name;
+  fragment.append(li);
+});
+
+console.dir(fragment);
+
+app.append(fragment);
