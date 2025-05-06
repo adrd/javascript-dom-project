@@ -17,32 +17,32 @@ data.forEach(item => {
   fragment.append(li);
 });
 
-// getElementById: HTMLElement
-const ulFromId = document.getElementById('list');
-console.log(ulFromId);
-ulFromId.append(fragment);   // <div id="app">
-                             //   <h1>JavaScript DOM</h1>
-                             //   <ul id="list">
-                             //     <li class="list-item">Earth</li>
-                             //     <li class="list-item">Fire</li>
-                             //     <li class="list-item">Water</li>
-                             //   </ul>
-                             // </div>
+// ul { background: red; }
+// #list { background: red; }
+const ulFromQuerySelector = document.querySelector('ul');
+console.log(ulFromQuerySelector);   // <ul id="list"></ul>
 
-// getElementsByClassName: HTMLCollection
-const listItemsFromClassName = ulFromId.getElementsByClassName('list-item');
-console.log(listItemsFromClassName);  // HTMLCollection(3) [li.list-item, li.list-item, li.list-item]
+const ulFromQuerySelector1 = document.querySelector('#list');
+console.log(ulFromQuerySelector1);  // <ul id="list"></ul>
 
-// getElementsByTagName: HTMLCollection
-const listItemsFromTagName = ulFromId.getElementsByTagName('li');
-console.log(listItemsFromTagName);    // HTMLCollection(3) [li.list-item, li.list-item, li.list-item]
+ulFromQuerySelector.append(fragment);  // <div id="app">
+                                       //  <h1>JavaScript DOM</h1>
+                                       //  <ul id="list">
+                                       //   <li class="list-item">Earth</li>
+                                       //   <li class="list-item">Fire</li>
+                                       //   <li class="list-item">Water</li>
+                                       //  </ul>
+                                       // </div>
 
-// Demonstrate live collection
+const listItemsFromQSA = ulFromQuerySelector.querySelectorAll('.list-item');
+console.log(listItemsFromQSA);      // NodeList(3) [li.list-item, li.list-item, li.list-item]
+
 const newListItem = document.createElement('li');
 newListItem.className = 'list-item';
 newListItem.innerText = 'Air';
-ulFromId.append(newListItem);
+ulFromQuerySelector.append(newListItem);
 
-// No need to query again!
-console.log(listItemsFromClassName);  // HTMLCollection(4) [li.list-item, li.list-item, li.list-item, li.list-item]
-console.log(listItemsFromTagName);    // HTMLCollection(4) [li.list-item, li.list-item, li.list-item, li.list-item]
+console.log(listItemsFromQSA);      // NodeList(3) [li.list-item, li.list-item, li.list-item]
+
+// need to query again!
+console.log(ulFromQuerySelector.querySelectorAll('.list-item'));  // NodeList(4) [li.list-item, li.list-item, li.list-item, li.list-item]
