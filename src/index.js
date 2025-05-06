@@ -12,27 +12,35 @@ app.innerHTML = `
   </ul>
 `;
 
-const listItems = document.querySelectorAll('#list li');
-console.log(listItems);  // NodeList(4) [li, li, li, li]
+// querySelectorAll: NodeList
+const list = document.querySelector('#list');
+const queryChildren = list.querySelectorAll('li');
+const selectedIndex = 2;
 
-for (let index = 0; index < listItems.length; index++) {
-  console.log(listItems[index]);  // <li>Earth</li>
-}                                 // <li>Fire</li>
-                                  // <li>Water</li>
-                                  // <li>Air</li>
+console.log(queryChildren);                 // NodeList(4) [li, li, li, li]
+console.log(queryChildren.length);          // 4
+console.log(queryChildren[selectedIndex]);  // <li>Water</li>
 
-for (const item of listItems) {
-  console.log(item);              // <li>Earth</li>
-}                                 // <li>Fire</li>
-                                  // <li>Water</li>
-                                  // <li>Air</li>
+// .children: HTMLCollection
+console.log(list.children);                 // HTMLCollection(4) [li, li, li, li]
+console.log(list.children.length);          // 4
+console.log(list.children[selectedIndex]);  // <li>Water</li>
 
-[...listItems].forEach((item) => console.log(item));         // <li>Earth</li>
-                                                             // <li>Fire</li>
-                                                             // <li>Water</li>
-                                                             // <li>Air</li>
+// .childNodes: NodeList
+console.log(list.childNodes);                // NodeList(9) [text, li, text, li, text, li, text, li, text]
+console.log(list.childNodes.length);         // 9
+console.log(list.childNodes[selectedIndex]); // #text
 
-Array.from(listItems).forEach((item) => console.log(item));  // <li>Earth</li>
-                                                             // <li>Fire</li>
-                                                             // <li>Water</li>
-                                                             // <li>Air</li>
+console.log(document.children);              // HTMLCollection [html]
+
+console.log(document.body.children);         // HTMLCollection(3) [header.header, div#app, script, app: div#app]
+
+console.log(document.body.childNodes);       // NodeList(7) [text, header.header, text, div#app, text, script, text]
+
+// first
+console.log(list.firstChild);                // #text
+console.log(list.firstElementChild);         // <li>Earth</li>
+
+// last
+console.log(list.lastChild);                 // #text
+console.log(list.lastElementChild);          // <li>Air</li>
