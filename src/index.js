@@ -6,25 +6,39 @@ app.innerHTML = `
   <h1>JavaScript DOM</h1>
 `;
 
-const data = ['Earth', 'Fire', 'Water', 'Air'];
+const div = document.createElement('div');
+const span = document.createElement('span');
+const p = document.createElement('p');
+const i = document.createElement('i');
+const b = document.createElement('b');
 
-// data.forEach(name => {
-//   const li = document.createElement('li');
-//   li.innerText = name;
-//   app.append(li);     // inefficient
-// });
+// new way using new api
+div.append(span);
+div.prepend(p);
+// span.before(i);
+// span.after(i);
+p.after(i);         // <div>
+                    //  <p></p>
+                    //  <i></i>
+                    //  <span></span>
+                    // </div>
 
-// const fragment = new DocumentFragment();
-const fragment = document.createDocumentFragment();
+// console.log(div);
 
-// console.dir(fragment);  // #document-fragment
+// Before: old way using insertBefore
+i.parentNode.insertBefore(b, i);   // <div>
+                                   //   <p></p>
+                                   //   <b></b>
+                                   //   <i></i>
+                                   //   <span></span>
+                                   // </div> 
 
-data.forEach(name => {
-  const li = document.createElement('li');
-  li.innerText = name;
-  fragment.append(li);
-});
+// After: old way using insertBefore + nextSibling
+i.parentNode.insertBefore(b, i.nextSibling);   // <div>
+                                               //   <p></p>
+                                               //   <i></i>
+                                               //   <b></b>
+                                               //   <span></span>
+                                               // </div>
 
-console.dir(fragment);
-
-app.append(fragment);
+console.log(div);
