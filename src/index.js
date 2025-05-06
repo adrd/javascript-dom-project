@@ -4,29 +4,37 @@ const app = document.getElementById('app');
 
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <div>
-    Replace!
-  </div>
 `;
 
-const div = app.querySelector('div');
+const div = document.createElement('div');
+const span = document.createElement('span');
 
-const newDiv = document.createElement('div');
-newDiv.innerText = 'I have been replaced!';
+span.innerText = 'Can you clone me?';
+div.append(span);
 
-// new way
-div.replaceWith(newDiv);    // <div id="app">
-                            //  <h1>JavaScript DOM</h1>
-                            //  <div>I have been replaced!</div>
-                            // </div>
+app.append(div);        // <div id="app">
+                        //  <h1>JavaScript DOM</h1>
+                        //  <div>
+                        //    <span>Can you clone me?</span>
+                        //  </div>
+                        // </div>
 
-// old way
-const anotherDiv = document.createElement('div');
-anotherDiv.innerText = 'I replace all';
+// cloneNode(false) only clones the top element
+const clone = div.cloneNode();
+console.log(clone);     // <div></div>
 
-setTimeout(() => {
-  newDiv.parentNode.replaceChild(anotherDiv, newDiv);  // <div id="app">
-                                                       //  <h1>JavaScript DOM</h1>
-                                                       //  <div>I replace all</div>
-                                                       // </div>
-}, 2000);
+// cloneNode(true) clones all elements and subtrees
+const newClone = div.cloneNode(true);
+console.log(newClone);  // <div>
+                        //  <span>Can you clone me?</span>
+                        // </div>
+
+app.append(newClone);   // <div id="app">
+                        //  <h1>JavaScript DOM</h1>
+                        //  <div>
+                        //    <span>Can you clone me?</span>
+                        //  </div>
+                        //  <div>
+                        //    <span>Can you clone me?</span>
+                        //  </div>
+                        // </div>
