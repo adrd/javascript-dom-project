@@ -4,48 +4,29 @@ const app = document.getElementById('app');
 
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <ul>
-    <li>1</li>
-  </ul>
+  <div>
+    Replace!
+  </div>
 `;
 
-const ul = document.querySelector('ul');
+const div = app.querySelector('div');
 
-// ul.insertAdjacentHTML('beforebegin', '<li>X</li>');
-ul.insertAdjacentHTML('beforebegin', '<p>Before</p>');  // <div id="app">
-                                                        //  <h1>JavaScript DOM</h1>
-                                                        //  <p>Before</p>
-                                                        //  <ul>
-                                                        //    <li>1</li>
-                                                        //  </ul>
-                                                        // </div>
+const newDiv = document.createElement('div');
+newDiv.innerText = 'I have been replaced!';
 
-ul.insertAdjacentHTML('afterbegin', '<li>First</li>');  // <div id="app">
-                                                        //  <h1>JavaScript DOM</h1>
-                                                        //  <p>Before</p>
-                                                        //  <ul>
-                                                        //    <li>First</li>
-                                                        //    <li>1</li>
-                                                        //  </ul>
-                                                        // </div>
+// new way
+div.replaceWith(newDiv);    // <div id="app">
+                            //  <h1>JavaScript DOM</h1>
+                            //  <div>I have been replaced!</div>
+                            // </div>
 
-ul.insertAdjacentHTML('beforeend', '<li>Last</li>')     // <div id="app">
-                                                        //  <h1>JavaScript DOM</h1>
-                                                        //  <p>Before</p>
-                                                        //  <ul>
-                                                        //    <li>First</li>
-                                                        //    <li>1</li>
-                                                        //    <li>Last</li>
-                                                        //  </ul>
-                                                        // </div>
+// old way
+const anotherDiv = document.createElement('div');
+anotherDiv.innerText = 'I replace all';
 
-ul.insertAdjacentHTML('afterend', '<p>After</p>');      // <div id="app">
-                                                        //  <h1>JavaScript DOM</h1>
-                                                        //  <p>Before</p>
-                                                        //  <ul>
-                                                        //    <li>First</li>
-                                                        //    <li>1</li>
-                                                        //    <li>Last</li>
-                                                        //  </ul>
-                                                        //  <p>After</p>
-                                                        // </div>
+setTimeout(() => {
+  newDiv.parentNode.replaceChild(anotherDiv, newDiv);  // <div id="app">
+                                                       //  <h1>JavaScript DOM</h1>
+                                                       //  <div>I replace all</div>
+                                                       // </div>
+}, 2000);
