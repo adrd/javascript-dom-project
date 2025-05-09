@@ -2,22 +2,39 @@ import "../assets/css/style.css";
 
 const app = document.getElementById('app');
 
+// app.innerHTML = `
+//   <h1>JavaScript DOM</h1>
+//   <button type="button" aria-label="Close this Modal">
+//     Close Me
+//   </button>
+// `;
+
+// const button = document.querySelector('button');
+// console.log(button);  // <button type="button" aria-label="Close this Modal">Close Me</button>
+
+// console.dir(button);  // > button
+
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <input type="text">
+  <button type="button">
+    Close Me
+  </button>
 `;
 
-const input = document.querySelector('input');
-console.log(input);       // <input type="text">
+const button = document.querySelector('button');
 
-console.log(input.type);  // text
+// SET
+button.setAttribute('aria-label', 'Close this Modal');
 
-console.log(input.value); // ''
+console.log(button);  // <button type="button" aria-label="Close this Modal">Close Me</button>
 
-input.value = 2;                // doesn't reflect on the document, <input type="text">
-// input.setAttribute('value', 2); // it is displayed on the document, <input type="text" value="2">
+console.dir(button);  // > button
 
-console.log(input.value);               // 2 (string type)
-console.log(parseInt(input.value, 10)); // 2 (integer type)
+// GET
+const value = button.getAttribute('aria-label');
+console.log(value);   // Close this Modal
 
-console.dir(input);  // javascript object representation of input DOM Node
+// .attributes
+console.log(button.attributes);                      // > NamedNodeMap
+console.log(button.attributes['aria-label']);        // aria-label="Close this Modal"
+console.log(button.attributes['aria-label'].value);  // Close this Modal
