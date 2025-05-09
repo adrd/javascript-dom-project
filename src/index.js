@@ -2,39 +2,25 @@ import "../assets/css/style.css";
 
 const app = document.getElementById('app');
 
-// app.innerHTML = `
-//   <h1>JavaScript DOM</h1>
-//   <button type="button" aria-label="Close this Modal">
-//     Close Me
-//   </button>
-// `;
-
-// const button = document.querySelector('button');
-// console.log(button);  // <button type="button" aria-label="Close this Modal">Close Me</button>
-
-// console.dir(button);  // > button
-
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
   <button type="button">
-    Close Me
+    Click Me!
   </button>
 `;
 
+// <button style="padding: 25px; margin: 10px 0;">
 const button = document.querySelector('button');
 
-// SET
-button.setAttribute('aria-label', 'Close this Modal');
+console.dir(button);        // > button
 
-console.log(button);  // <button type="button" aria-label="Close this Modal">Close Me</button>
+console.dir(button.style);  // > CSSStyleDeclaration
 
-console.dir(button);  // > button
+// cssText
+button.style.cssText = 'padding: 25px; margin: 10px 0; font-size: 20px';
 
-// GET
-const value = button.getAttribute('aria-label');
-console.log(value);   // Close this Modal
+// direct property access
+button.style.fontSize = '22px';
+button.style.marginTop = '15px';
 
-// .attributes
-console.log(button.attributes);                      // > NamedNodeMap
-console.log(button.attributes['aria-label']);        // aria-label="Close this Modal"
-console.log(button.attributes['aria-label'].value);  // Close this Modal
+console.log(button.style.fontSize);  // 22px
