@@ -4,23 +4,20 @@ const app = document.getElementById('app');
 
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <ul id="list">
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-  </ul>
+  <input type="text">
 `;
 
-// querySelectorAll: NodeList
-const listItem = document.querySelector('#list li');
+const input = document.querySelector('input');
+console.log(input);       // <input type="text">
 
-console.log(listItem);                         // <li>1</li>
+console.log(input.type);  // text
 
-// Any DOM Nodes
-console.log(listItem.nextSibling);             // #text
-console.log(listItem.previousSibling);         // #text
+console.log(input.value); // ''
 
-// Any Element Nodes
-console.log(listItem.nextElementSibling);      // <li>2</li>
-console.log(listItem.previousElementSibling);  // null
+input.value = 2;                // doesn't reflect on the document, <input type="text">
+// input.setAttribute('value', 2); // it is displayed on the document, <input type="text" value="2">
+
+console.log(input.value);               // 2 (string type)
+console.log(parseInt(input.value, 10)); // 2 (integer type)
+
+console.dir(input);  // javascript object representation of input DOM Node
