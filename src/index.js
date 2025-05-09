@@ -11,46 +11,33 @@ app.innerHTML = `
 
 const button = document.querySelector('button');
 
-console.dir(button);  // > button
-
-// Avoid, doesn't allow multiple event handlers
-// button.onclick = function() {
-//   console.log('1');
-// };
-
-// after button click, 1 is displayed
-
-// button.onclick = function() {
-//   console.log('2');
-// };
-
-/**********************************************/
-
-// function handleClick() {
-//   console.log('2');
+// function handleClick(event) {
+//   console.log(event.target);        // element that initiated the event, in this case button element
 // }
 
 // button.addEventListener('click', handleClick);
 
-// after button click, 2 is displayed
+// button.removeEventListener('click', handleClick);
 
-// button.addEventListener('click', () => {
-//   console.log('3');
-// });
+// setTimeout(() => {
+//   button.removeEventListener('click', handleClick);
+// }, 5000);  // after 5 seconds click event handler is not available anymore
 
-// after button click, 2 and 3 is displayed
+/****************************************/
 
-/**********************************************/
-
-function handleClick(event) {
-  console.log(event);               // event object
-  console.log(event.target);        // element that initiated the event, in this case button element
-  console.log(this, event.target);  // <button type="button">Click Me</button> <button type="button">Click Me</button>
+function handleClickOnce(event) {
+  console.log(event.target);
+  button.removeEventListener('click', handleClickOnce);
 }
 
-button.addEventListener('click', handleClick);
+button.addEventListener('click', handleClickOnce);
 
-// arrow functions
-button.addEventListener('dblclick', (event) => {
-  console.log(this, event.target, 'Double-clicked!');  // undefined <button type="button">Click Me</button> 'Double-clicked!'
-});
+/****************************************/
+
+button.addEventListener(
+  'dblclick', 
+  () => console.log('Double-click!'),
+  { once: true } 
+);
+
+// dblclick event handler is executed only once, after that it is removed
