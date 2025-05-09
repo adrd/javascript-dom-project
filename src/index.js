@@ -4,39 +4,53 @@ const app = document.getElementById('app');
 
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <button type="button" class="one two">
-    Click Me!
+  <button type="button">
+    Click Me
   </button>
 `;
 
 const button = document.querySelector('button');
 
-console.dir(button);  // button.one.two
+console.dir(button);  // > button
 
-// Old way: Set
-button.className += ' three';
+// Avoid, doesn't allow multiple event handlers
+// button.onclick = function() {
+//   console.log('1');
+// };
 
-// Old way: Get
-console.log(button.className);  // one two three
+// after button click, 1 is displayed
 
-// New way: ClassList
-// Add
-button.classList.add('four');
-console.log(button.className);  // one two three four
+// button.onclick = function() {
+//   console.log('2');
+// };
 
-// Remove
-button.classList.remove('one')
-console.log(button.className)   // two three four
+/**********************************************/
 
-// Toggle
-button.classList.toggle('five');
-console.log(button.className);  // two three four five
+// function handleClick() {
+//   console.log('2');
+// }
 
-setTimeout(
-  () => button.classList.toggle('five')
-  , 2500);
+// button.addEventListener('click', handleClick);
 
-// after setTimeout() is run -> two three four 
+// after button click, 2 is displayed
 
-// Replace
-button.classList.replace('two', 'six');
+// button.addEventListener('click', () => {
+//   console.log('3');
+// });
+
+// after button click, 2 and 3 is displayed
+
+/**********************************************/
+
+function handleClick(event) {
+  console.log(event);               // event object
+  console.log(event.target);        // element that initiated the event, in this case button element
+  console.log(this, event.target);  // <button type="button">Click Me</button> <button type="button">Click Me</button>
+}
+
+button.addEventListener('click', handleClick);
+
+// arrow functions
+button.addEventListener('dblclick', (event) => {
+  console.log(this, event.target, 'Double-clicked!');  // undefined <button type="button">Click Me</button> 'Double-clicked!'
+});
