@@ -4,40 +4,24 @@ const app = document.getElementById('app');
 
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <button type="button">
-    Add Item
-  </button>
-  <ul id="list">
-    <li>Item 1</li>
-    <li>Item 2</li>
-    <li>Item 3</li>
-    <li>Item 4</li>
-  </ul>
+  <div style="height: 1000px;"></div>
 `;
 
-const button = document.querySelector('button');
-const list = document.querySelector('#list');
-// const items = [...list.querySelectorAll('li')];
-
-function handleClick(event) {
-  // console.log(event.target.nodeName);
-  if (event.target.nodeName.toLowerCase() !== 'li') {
-    return;
+document.addEventListener('keydown', event => {
+  // console.log(event.key, event.code);
+  switch (event.key) {
+    case 'ArrowUp': {
+      console.log('Up!');
+      event.preventDefault();
+      break;
+    }
+    case 'ArrowDown': {
+      console.log('Down!');
+      event.preventDefault();
+      break;
+    }
   }
-  console.log(event.target.innerText);
-}
-
-list.addEventListener('click', handleClick);
-
-// not the recommended way
-// items.forEach(item => {
-//   item.addEventListener('click', handleClick);
-// });
-
-button.addEventListener('click', () => {
-  const items = document.querySelectorAll('li');
-  const li = document.createElement('li');
-  li.innerText = `Item ${items.length + 1}`;
-  // li.addEventListener('click', handleClick);
-  list.append(li);
 });
+
+document.addEventListener('keydown', event => console.log(event.key));
+document.addEventListener('keyup', event => console.log(event.key));
