@@ -4,37 +4,40 @@ const app = document.getElementById('app');
 
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <form>
-    <label>
-      Sign-up Email
-      <input type="email">
-    </label>
-    <label>
-      I agree to the terms
-      <input type="checkbox">
-    </label>
-  </form>
+  <button type="button">
+    Add Item
+  </button>
+  <ul id="list">
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <li>Item 4</li>
+  </ul>
 `;
 
-const form = document.querySelector('form');
-const email = form.querySelector('input[type="email"]');
-const checkbox = form.querySelector('input[type="checkbox"]');
+const button = document.querySelector('button');
+const list = document.querySelector('#list');
+// const items = [...list.querySelectorAll('li')];
 
-function handleSubmit(event) {
-  // console.log(event);     // SubmitEvent 
-  // event.preventDefault();
-  if (!checkbox.checked) {
-    event.preventDefault();
-    console.log('I am not submitting...');
-    console.log(event.defaultPrevented);  // true
+function handleClick(event) {
+  // console.log(event.target.nodeName);
+  if (event.target.nodeName.toLowerCase() !== 'li') {
     return;
   }
-  
-  console.log('Submitted', email.value);
+  console.log(event.target.innerText);
 }
 
-form.addEventListener('submit', handleSubmit);
+list.addEventListener('click', handleClick);
 
-// checkbox.addEventListener('click', 
-//   event => event.preventDefault()
-// );
+// not the recommended way
+// items.forEach(item => {
+//   item.addEventListener('click', handleClick);
+// });
+
+button.addEventListener('click', () => {
+  const items = document.querySelectorAll('li');
+  const li = document.createElement('li');
+  li.innerText = `Item ${items.length + 1}`;
+  // li.addEventListener('click', handleClick);
+  list.append(li);
+});
