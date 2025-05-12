@@ -4,70 +4,32 @@ const app = document.getElementById('app');
 
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <form name="order">
-    <label>
-      Your name
-      <input type="text" name="fullname">
-    </label>
-    <label>
-      Which pizza would you like?
-      <select name="pizza">  
-        <option value="pepperoni">Pepperoni</option>
-        <option value="meaty">Meaty</option>
-        <option value="cheesey">Cheesey</option>
-      </select>
-    </label>
-    <div>
-      What size?
-      <label>
-        Small 
-        <input type="radio" name="size" value="small" checked>
-      </label>
-      <label>
-        Medium
-        <input type="radio" name="size" value="medium">
-      </label>
-      <label>
-        Large 
-        <input type="radio" name="size" value="large">
-      </label>
-    </div>
-    <label>
-      Quantity
-      <input type="number" name="quantity" value="1">
-    </label>
-    <button type="submit">
-      Submit
-    </button>
+  <form name="example">
+    <input type="text" name="myInput" value="Hello">
   </form>
 `;
 
-const form = document.forms.order;
+const form = document.forms.example;
+const input = form.myInput;
 
-function handleSubmit(event) {
-  event.preventDefault();
-  // console.log([...new FormData(event.target)]);  // (4) [Array(2), Array(2), Array(2), Array(2)]
-  const formData = new FormData(event.target);
+// 1. Properties that are useful
+console.dir(input);  // > input
 
-  // query string
-  // Content-Type = application/x-www-form-urlencoded
-  // fullname=Todd+Motto&pizza=pepperoni&size=large&quantity=2
-  const asString = new URLSearchParams(formData).toString();
-  console.log(asString);  // fullname=Todd+Motto&pizza=pepperoni&size=small&quantity=1
+// set
+input.value = 'Goodbye';
+// input.disabled = true;
+// input.readOnly = true;
 
-  // json
-  const asJSON = JSON.stringify(Object.fromEntries(formData));
-  console.log(asJSON);    // {"fullname":"Todd Motto","pizza":"pepperoni","size":"small","quantity":"1"}
+// get
+console.log(input.value);
 
-  fetch('/fakeapi', {
-    method: 'post',
-    headers: {
-      // 'Content-Type': 'application/x-www-form-urlencoded'
-      'Content-Type': 'application/json'
-    },
-    // body: asString
-    body: asJSON
-  });
-}
+// 2. Events
+input.addEventListener('focus', () => console.log('Focus'));   // fires when the input element receives focus
+input.addEventListener('blur', () => console.log('Blur'));     // fires when I leave the input element
+input.addEventListener('input', () => console.log('Input'));   // fires when I type inside the input element
+input.addEventListener('change', () => console.log('Change')); // fires when I leave the input element if the value is changed
 
-form.addEventListener('submit', handleSubmit);
+// 3. Methods
+// focus an input
+input.focus();
+setTimeout(() => input.blur(), 2500);
