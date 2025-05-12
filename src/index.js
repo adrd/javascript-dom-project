@@ -52,20 +52,22 @@ function handleSubmit(event) {
   // query string
   // Content-Type = application/x-www-form-urlencoded
   // fullname=Todd+Motto&pizza=pepperoni&size=large&quantity=2
-  
-  // const data = [...formData.entries()];
-  // console.log(data);
-
-  // const asString = data.map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
-  //                      .join('&');
-  // console.log(asString);  // fullname=Todd%20Motto&pizza=pepperoni&size=medium&quantity=1
-
   const asString = new URLSearchParams(formData).toString();
   console.log(asString);  // fullname=Todd+Motto&pizza=pepperoni&size=small&quantity=1
 
   // json
   const asJSON = JSON.stringify(Object.fromEntries(formData));
-  console.log(asJSON);  // {"fullname":"Todd Motto","pizza":"pepperoni","size":"small","quantity":"1"}
+  console.log(asJSON);    // {"fullname":"Todd Motto","pizza":"pepperoni","size":"small","quantity":"1"}
+
+  fetch('/fakeapi', {
+    method: 'post',
+    headers: {
+      // 'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
+    },
+    // body: asString
+    body: asJSON
+  });
 }
 
 form.addEventListener('submit', handleSubmit);
