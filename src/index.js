@@ -17,6 +17,25 @@ app.innerHTML = `
         <option value="cheesey">Cheesey</option>
       </select>
     </label>
+    <div>
+      What size?
+      <label>
+        Small 
+        <input type="radio" name="size" value="small" checked>
+      </label>
+      <label>
+        Medium
+        <input type="radio" name="size" value="medium">
+      </label>
+      <label>
+        Large 
+        <input type="radio" name="size" value="large">
+      </label>
+    </div>
+    <label>
+      Quantity
+      <input type="number" name="quantity" value="1">
+    </label>
     <button type="submit">
       Submit
     </button>
@@ -27,28 +46,26 @@ const form = document.forms.order;
 
 function handleSubmit(event) {
   event.preventDefault();
-  console.log(event);                      // SubmitEvent
-  console.log(event.target);               // <form name="order">...</form>
-  console.log(new FormData(event.target)); // event.target is a reference to the object onto which the event was dispatched
-                                           // new FormData(event.target) will trigger formData event
-  // console.log([...new FormData(event.target)]);  // (2) [Array(2), Array(2)]
-}
+  // console.log([...new FormData(event.target)]);  // (4) [Array(2), Array(2), Array(2), Array(2)]
+  const formData = new FormData(event.target);
 
-// [
-//   ["fullname", "Todd Motto"],
-//   ["email", ""]
-// ]
+  // query string
+  // Content-Type = application/x-www-form-urlencoded
+  // fullname=Todd+Motto&pizza=pepperoni&size=large&quantity=2
+  
+  // const data = [...formData.entries()];
+  // console.log(data);
 
-function handleFormData(event) {
-  // console.log(event.formData);             // > FormData {}
-  console.log([...event.formData]);           // > (2) [Array(2), Array(2)]
-  console.log([...event.formData.values()]);  // > ['Todd Motto', 'meaty']
-  // console.log([...event.formData.entries()]); // > (2) [Array(2), Array (2)]
-  const entries = event.formData.entries();
-  for (const entry of entries) {
-    console.log(entry);                       // (2) ['fullname', 'Todd Motto'], (2) ['pizza', 'meaty']
-  }
+  // const asString = data.map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+  //                      .join('&');
+  // console.log(asString);  // fullname=Todd%20Motto&pizza=pepperoni&size=medium&quantity=1
+
+  const asString = new URLSearchParams(formData).toString();
+  console.log(asString);  // fullname=Todd+Motto&pizza=pepperoni&size=small&quantity=1
+
+  // json
+  const asJSON = JSON.stringify(Object.fromEntries(formData));
+  console.log(asJSON);  // {"fullname":"Todd Motto","pizza":"pepperoni","size":"small","quantity":"1"}
 }
 
 form.addEventListener('submit', handleSubmit);
-form.addEventListener('formdata', handleFormData);
