@@ -5,31 +5,59 @@ const app = document.getElementById('app');
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
   <form name="example">
-    <input type="text" name="myInput" value="Hello">
+    <div class="container">
+      <label>
+        Blue
+        <input type="radio" name="color" value="blue" checked>
+      </label>
+      <label>
+        Red
+        <input type="radio" name="color" value="red">
+      </label>
+      <label>
+        Green
+        <input type="radio" name="color" value="green">
+      </label>
+    </div>
   </form>
 `;
 
 const form = document.forms.example;
-const input = form.myInput;
+const radios = [...form.elements.color];
+
+console.log(radios);  // > (3) [input, input, input]
 
 // 1. Properties that are useful
-console.dir(input);  // > input
+// radios[2].checked = true;
 
-// set
-input.value = 'Goodbye';
-// input.disabled = true;
-// input.readOnly = true;
-
-// get
-console.log(input.value);
+radios.forEach(radio => {
+  console.log(radio);          // <input type="radio" name="color" value="blue"> 
+                               // <input type="radio" name="color" value="red">
+                               // <input type="radio" name="color" value="green">
+  console.dir(radio);          // > input
+  console.log(radio.value);    // blue red green
+  console.log(radio.checked);  // true false false
+});
 
 // 2. Events
-input.addEventListener('focus', () => console.log('Focus'));   // fires when the input element receives focus
-input.addEventListener('blur', () => console.log('Blur'));     // fires when I leave the input element
-input.addEventListener('input', () => console.log('Input'));   // fires when I type inside the input element
-input.addEventListener('change', () => console.log('Change')); // fires when I leave the input element if the value is changed
+const container = form.querySelector('.container');
+// console.log(container);  // <div class="container">...</div>
+
+container.addEventListener('change', () => {
+  // console.log('Change...');
+  
+  // const checked = radios.find(radio => radio.checked).value;
+  // console.log(checked);
+
+  console.log(form.elements.color);        // > RadioNodeList(3) [input, input, input, value: 'green']
+  console.log(form.elements.color.value);
+});
+
+// const checked = radios.find(radio => radio.checked);
+// console.log(checked);       // <input type="radio" name="color" value="blue" checked="">
+
+// const checkedValue = checked.value;
+// console.log(checkedValue);  // blue
 
 // 3. Methods
-// focus an input
-input.focus();
-setTimeout(() => input.blur(), 2500);
+radios[2].select();
