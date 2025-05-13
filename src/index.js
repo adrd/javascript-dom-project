@@ -26,10 +26,28 @@ app.innerHTML = `
 let todos = [];
 
 // selectors
+const root = document.querySelector('.todos');
+const list = root.querySelector('.todos-list');
 const form = document.forms.todos;
 const input = form.elements.todo;
 
 // functions
+function renderTodos(todos) {
+  let todoString = '';
+
+  todos.forEach((todo, index) => {
+    todoString += `
+      <li data-id=${index}>
+        <input type="checkbox">
+        <span>${todo.label}</span>
+        <button type="button"></button>
+      </li>
+    `;
+  });
+
+  list.innerHTML = todoString;
+}
+
 function addTodo(event) {
   event.preventDefault();
   
@@ -43,7 +61,9 @@ function addTodo(event) {
       complete
     }
   ];
-  console.log(todos);
+
+  renderTodos(todos);
+  
   input.value = '';
 }
 
