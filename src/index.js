@@ -102,6 +102,51 @@ function updateTodo(event) {
   saveToStorage(todos);
 }
 
+function editTodo(event) {
+  if (event.target.nodeName.toLowerCase() !== 'span') {
+    return;
+  }
+
+  const id = parseInt(event.target.parentNode.getAttribute('data-id'), 10);
+  const todoLabel = todos[id].label;
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = todoLabel;
+
+  function handleEdit(event) {
+    event.stopPropagation();
+
+    const label = this.value;  // this is the input element to which handleEdit() handler is bound
+    // console.log(this);
+    // console.log(this.value);
+    if (label !== todoLabel) {
+      todos = todos.map((todo, index) => {
+        if (index === id) {
+          return {
+            ...todo,
+            label
+          };
+        }
+        return todo;
+      });
+      renderTodos(todos);
+      saveToStorage(todos);
+    }
+
+    // clean up
+    event.target.style.display = '';
+    this.removeEventListener('change', handleEdit);
+    this.remove();
+  }
+
+  event.target.style.display = 'none';
+  event.target.parentNode.append(input);
+
+  input.addEventListener('change', handleEdit);
+  input.focus();
+}
+
 function deleteTodo(event) {
   // console.log(event.target); // <button type="button"></button>
   if (event.target.nodeName.toLowerCase() !== 'button') {
@@ -137,6 +182,8 @@ function init() {
   form.addEventListener('submit', addTodo);
   // Update Todo
   list.addEventListener('change', updateTodo);
+  // Edit Todo
+  list.addEventListener('dblclick', editTodo); 
   // Delete Todo
   list.addEventListener('click', deleteTodo);
   // Complete All Todos
